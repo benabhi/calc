@@ -595,3 +595,72 @@ clj꞉calc.core꞉> 
 ;                  :visible?  boolean
 nil
 clj꞉calc.core꞉> 
+; Execution error (NumberFormatException) at calc.core/eval13622 (form-init5532077701774623483.clj:68).
+; Invalid number: 1+2
+clj꞉calc.core꞉> 
+; Execution error (NumberFormatException) at calc.core/eval13624 (form-init5532077701774623483.clj:68).
+; Invalid number: 1+2
+clj꞉calc.core꞉> 
+"+ 1 1"
+clj꞉calc.core꞉> 
+2
+clj꞉calc.core꞉> 
+; Execution error (NumberFormatException) at calc.core/eval13632 (form-init5532077701774623483.clj:68).
+; Invalid number: 1+5+8
+clj꞉calc.core꞉> 
+#'calc.core/evaluar-expresion-segura
+clj꞉calc.core꞉> 
+"Error al evaluar la expresión: java.lang.NumberFormatException: Invalid number: 7+5+8.5/4"
+clj꞉calc.core꞉> 
+; Error al evaluar la expresión: java.lang.NumberFormatException: Invalid number: 7+5+8.5/4
+nil
+clj꞉calc.core꞉> 
+16.75
+clj꞉calc.core꞉> 
+; Syntax error compiling at (c:\Users\benabhi\Documents\Code\Clojure\calc\src\calc\core.clj:68:1).
+; Unable to resolve symbol: infix in this context
+clj꞉calc.core꞉> 
+; Syntax error compiling at (c:\Users\benabhi\Documents\Code\Clojure\calc\src\calc\core.clj:68:1).
+; Unable to resolve symbol: infix in this context
+clj꞉calc.core꞉> 
+; Syntax error (ClassNotFoundException) compiling at (c:\Users\benabhi\Documents\Code\Clojure\calc\src\calc\core.clj:9:3).
+; infix.macros
+clj꞉calc.core꞉> 
+; Syntax error macroexpanding clojure.core/ns at (c:\Users\benabhi\Documents\Code\Clojure\calc\src\calc\core.clj:1:1).
+; :require-macros - failed: #{:refer-clojure} at: [:ns-clauses :refer-clojure :clause] spec: :clojure.core.specs.alpha/ns-refer-clojure
+; :require-macros - failed: #{:require} at: [:ns-clauses :require :clause] spec: :clojure.core.specs.alpha/ns-require
+; :require-macros - failed: #{:import} at: [:ns-clauses :import :clause] spec: :clojure.core.specs.alpha/ns-import
+; :require-macros - failed: #{:use} at: [:ns-clauses :use :clause] spec: :clojure.core.specs.alpha/ns-use
+; :require-macros - failed: #{:refer} at: [:ns-clauses :refer :clause] spec: :clojure.core.specs.alpha/ns-refer
+; :require-macros - failed: #{:load} at: [:ns-clauses :load :clause] spec: :clojure.core.specs.alpha/ns-load
+; :require-macros - failed: #{:gen-class} at: [:ns-clauses :gen-class :clause] spec: :clojure.core.specs.alpha/ns-gen-class
+clj꞉calc.core꞉> 
+; Syntax error macroexpanding clojure.core/ns at (c:\Users\benabhi\Documents\Code\Clojure\calc\src\calc\core.clj:1:1).
+; use - failed: #{:refer-clojure} at: [:ns-clauses :refer-clojure :clause] spec: :clojure.core.specs.alpha/ns-refer-clojure
+; use - failed: #{:require} at: [:ns-clauses :require :clause] spec: :clojure.core.specs.alpha/ns-require
+; use - failed: #{:import} at: [:ns-clauses :import :clause] spec: :clojure.core.specs.alpha/ns-import
+; use - failed: #{:use} at: [:ns-clauses :use :clause] spec: :clojure.core.specs.alpha/ns-use
+; use - failed: #{:refer} at: [:ns-clauses :refer :clause] spec: :clojure.core.specs.alpha/ns-refer
+; use - failed: #{:load} at: [:ns-clauses :load :clause] spec: :clojure.core.specs.alpha/ns-load
+; use - failed: #{:gen-class} at: [:ns-clauses :gen-class :clause] spec: :clojure.core.specs.alpha/ns-gen-class
+clj꞉calc.core꞉> 
+; Syntax error compiling at (c:\Users\benabhi\Documents\Code\Clojure\calc\src\calc\core.clj:69:1).
+; Unable to resolve symbol: infix in this context
+clj꞉calc.core꞉> 
+; Execution error (FileNotFoundException) at calc.core/eval13649$loading (form-init5532077701774623483.clj:1).
+; Could not locate infix/macros__init.class, infix/macros.clj or infix/macros.cljc on classpath.
+clj꞉calc.core꞉> 
+; Execution error (FileNotFoundException) at calc.core/eval13657$loading (form-init5532077701774623483.clj:1).
+; Could not locate infix/macros__init.class, infix/macros.clj or infix/macros.cljc on classpath.
+clj꞉calc.core꞉> 
+nil
+clj꞉calc.core꞉> 
+; Syntax error compiling at (c:\Users\benabhi\Documents\Code\Clojure\calc\src\calc\core.clj:69:1).
+; Unable to resolve symbol: infix in this context
+clj꞉calc.core꞉> 
+; Syntax error (ClassNotFoundException) compiling at (c:\Users\benabhi\Documents\Code\Clojure\calc\src\calc\core.clj:1:8136).
+; infix.macros
+clj꞉calc.core꞉> 
+; Execution error (FileNotFoundException) at calc.core/eval13679$loading (form-init5532077701774623483.clj:1).
+; Could not locate infix/macros__init.class, infix/macros.clj or infix/macros.cljc on classpath.
+clj꞉calc.core꞉> 

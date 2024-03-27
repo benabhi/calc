@@ -1,12 +1,15 @@
 (ns calc.core
   "Este programa crea una calculadora simple con interaz grafica de
    usuario (GUI)."
-  (:require [seesaw.core :refer [invoke-later button frame native! frame show!
-                                 grid-panel horizontal-panel vertical-panel
-                                 text text! pack! listen select to-root
-                                 config selection value]])
-  (:require [seesaw.dev  :refer [show-options]])
+  (:require
+   [seesaw.core :refer [invoke-later button frame native! frame show!
+                        grid-panel horizontal-panel vertical-panel
+                        text text! pack! listen select to-root
+                        config selection value]]
+   [seesaw.dev  :refer [show-options]]
+   [infix.macros :refer [infix]])
   (:gen-class))
+
 
 ;; Docs
 ;; https://cljdoc.org/d/seesaw/seesaw/1.5.0/api/seesaw.core?q=pack#pack!
@@ -16,7 +19,7 @@
   "Visor y boton de limpieza (CE)"
   (horizontal-panel
    :items [(text :id :visor :editable? false)
-           (button :id :ce :text "CE")]))
+           (button :text "CE" :class "btn")]))
 
 (def grid-buttons
   "Panel de botones"
@@ -24,20 +27,20 @@
    :columns 4
    :items [(button :text "1" :class "btn")
            (button :text "2" :class "btn")
-           (button :text "3")
-           (button :text "+")
-           (button :text "4")
-           (button :text "5")
-           (button :text "6")
-           (button :text "-")
-           (button :text "7")
-           (button :text "8")
-           (button :text "9")
-           (button :text "/")
-           (button :text "0")
-           (button :text ".")
-           (button :text "=")
-           (button :text "*")]))
+           (button :text "3" :class "btn")
+           (button :text "+" :class "btn")
+           (button :text "4" :class "btn")
+           (button :text "5" :class "btn")
+           (button :text "6" :class "btn")
+           (button :text "-" :class "btn")
+           (button :text "7" :class "btn")
+           (button :text "8" :class "btn")
+           (button :text "9" :class "btn")
+           (button :text "/" :class "btn")
+           (button :text "0" :class "btn")
+           (button :text "." :class "btn")
+           (button :text "=" :class "btn")
+           (button :text "*" :class "btn")]))
 
 (def calc-panel
   "Estructura de la calculadora"
@@ -52,12 +55,19 @@
                   (let [visor-widget (select (to-root e) [:#visor])
                         current-value (text visor-widget)
                         button-value (config e :text)]
-                    (case
-                     "1" (println "el valor es 1"))
-                    ;; Seteamos el visor con el valor actual + nuevo
-                    (text! visor-widget (str current-value button-value)))))
+                    (case button-value
+                      "CE" (text! visor-widget "0")
+                      ;"=" (let [result (eval (read-string current-value))]
+                      "+" (println "el valor es +")
+                      "*" (println "el valor es *")
+                      "/" (println "el valor es /")
+                      "-" (println "el valor es -")
+                      ;; Seteamos el visor con el valor actual + nuevo
+                      (text! visor-widget (str current-value button-value))))))
 
 (show-options (text))
+;; https://github.com/rm-hull/infix
+(infix 8 + 5)
 
 (defn -main
   "Funcion principal de la calculadora"
