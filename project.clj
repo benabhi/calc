@@ -5,7 +5,7 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [seesaw "1.5.0"]
-                 [rm-hull/infix "0.4.0"]]
+                 [rm-hull/infix "0.4.3"]]
   :main ^:skip-aot calc.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all
