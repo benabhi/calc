@@ -8,8 +8,8 @@
 ;;
 ;; Librerias utilizadas.
 ;;
-;; - [seesaw.core](https://github.com/clj-commons/seesaw)
-;; - [infix.macros](hhttps://github.com/rm-hull/infix)
+;; - [seesaw](https://github.com/clj-commons/seesaw)
+;; - [infix](hhttps://github.com/rm-hull/infix)
 ;;
 ;; by Benabhi <benabhi@gmail.com> (c) 2024.
 (ns calc.core
