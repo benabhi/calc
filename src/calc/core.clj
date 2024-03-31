@@ -18,7 +18,7 @@
   (:require
    [seesaw.core :refer [invoke-later button frame native! frame show! grid-panel
                         horizontal-panel vertical-panel text text! listen config
-                        select to-root]]
+                        select to-root repaint!]]
    ;; ? NOTE: Para ver las opciones de un widget
    ;;[seesaw.dev  :refer [show-options]]
    [seesaw.keymap :refer [map-key]]
@@ -52,7 +52,8 @@
 (defn clear-visor
   "Limpia el visor de la calculadora"
   [visor-widget]
-  (text! visor-widget ""))
+  (text! visor-widget "")
+  (repaint! visor-widget))
 
 (defn calculate-result
   "Funcion que calcula el resultado de una operacion"
@@ -110,7 +111,7 @@
   (horizontal-panel
    :maximum-size [250 :by 50]
    :items [(text :id :visor :editable? false :font "Arial-18")
-           (button :text "CE" :class "btn" :font "Arial-18")]))
+           (button :text "CE" :id "btn-ce" :font "Arial-18")]))
 
 (def grid-buttons
   "Panel de botones"
@@ -173,6 +174,8 @@
 (map-key calc-panel "DIVIDE" (select calc-panel [:#btn-divide]))
 (map-key calc-panel "ENTER" (select calc-panel [:#btn-equals]))
 (map-key calc-panel "DECIMAL" (select calc-panel [:#btn-decimal]))
+;; ! TODO: este anda erratico, a veces si y a veces no. Arreglar luego.
+(map-key calc-panel "BACK_SPACE" (select visor-and-ce [:#btn-ce]))
 
 ;; Funcion principal del programa
 
