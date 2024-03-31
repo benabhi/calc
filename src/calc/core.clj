@@ -1,99 +1,186 @@
+;; Calculadora simple
+;;
+;; El siguiente proyecto es una calculadora simple escrita en el lenguaje de
+;; programación Clojure.
+;;
+;; Con fines didactios para aprender el lenguaje y como proyecto para entregar
+;; en la asignatura de 'Programacíon Logica'.
+;;
+;; Librerias utilizadas.
+;;
+;; - [seesaw.core](https://github.com/clj-commons/seesaw)
+;; - [infix.macros](hhttps://github.com/rm-hull/infix)
+;;
+;; by Benabhi <benabhi@gmail.com> (c) 2024.
 (ns calc.core
   "Este programa crea una calculadora simple con interaz grafica de
    usuario (GUI)."
   (:require
-   ;; https://github.com/clj-commons/seesaw
    [seesaw.core :refer [invoke-later button frame native! frame show! grid-panel
-                        horizontal-panel vertical-panel text text! pack! listen
-                        select to-root config selection value]]
-   [seesaw.dev  :refer [show-options]]
+                        horizontal-panel vertical-panel text text! listen config
+                        select to-root]]
+   ;; ? NOTE: Para ver las opciones de un widget
+   ;;[seesaw.dev  :refer [show-options]]
    [seesaw.keymap :refer [map-key]]
-   ;; https://github.com/rm-hull/infix
-   [infix.macros :refer [from-string]])
+   [infix.macros :refer [from-string]]
+   [seesaw.icon :refer [icon]]
+   [clojure.java.io :as io]
+   [clojure.string :as str])
   (:gen-class))
+
+;; Recurso estatico (./resources/icon.png) va con el jar cuando se compila.
+(def icon_path
+  "Path al icono de la calculadora"
+  (str (io/resource "icon.png")))
+
+(defn ends-with-dot-zero?
+  "Verifica si un numero termina con .0"
+  [number]
+  (str/ends-with? (str number) ".0"))
+
+(defn parse-result
+  "Devuelve un entero si es numero con decimal .0 o directamente un entero,
+   caso contrario devuelve un flotante."
+  [result]
+  (let [r (str result)]
+    (if-not (nil? (str/index-of r "."))
+      (if (ends-with-dot-zero? r)
+        (int result)
+        (float result))
+      (int result))))
+
+(defn clear-visor
+  "Limpia el visor de la calculadora"
+  [visor-widget]
+  (text! visor-widget ""))
+
+(defn calculate-result
+  "Funcion que calcula el resultado de una operacion"
+  [visor-widget current-value]
+  ;; from-string (de la libreria infix) parsea una cadena de texto como
+  ;; "2+2" ejecuta la operacion y devuelve el valor como un string
+  (text! visor-widget
+         (str (try (parse-result (float ((from-string current-value))))
+                   (catch Exception _err "Err"))))) ; x / 0 = Err
+
+(defn button-action
+  "Funcion que aplica un evento a un boton de la calculadora"
+  [visor-widget current-value button-value]
+  (let [aritmetic-operators ["+", "-", "*", "/"]]
+    (if (= current-value "Err")
+      (text! visor-widget "")
+      (cond
+        ;; Condicion 1
+        ;; Si no hay nada en el visor no puede empezar con un operador
+        (and (= current-value "")
+             (some #(= button-value %) aritmetic-operators))
+        (text! visor-widget  "")
+
+        ;; Condicion 2
+        ;; Si el ultimo caracter es un operador no se puede agregar otro
+        ;; se reemplaza el operador por el nuevo
+        (and (some #(str/ends-with? current-value %)
+                   aritmetic-operators)
+             (some #(= button-value %) aritmetic-operators))
+        (text! visor-widget
+               (str (subs current-value 0
+                          (dec (count current-value))) button-value))
+        ;; Default
+        ;; Se escribe el nuevo valor
+        :else
+        (text! visor-widget (str current-value button-value))))))
+
+(defn buttons-actions
+  "Funcion que aplica un evento a todos los botones de la calculadora"
+  [event]
+  (let [visor-widget (select (to-root event) [:#visor]) ; El widget del visor
+        current-value (text visor-widget) ; El valor actual del visor
+        button-value (config event :text)] ; El valor del boton
+    (case button-value
+      "CE" (clear-visor visor-widget)
+      "=" (calculate-result visor-widget current-value)
+      ;; De aqui en adante lo que se hace es que si ya hay un operador al
+      ;; final de la cadena se reemplaza si otro es presionado
+      (button-action visor-widget current-value button-value))))
+
+;; Widgets
 
 (def visor-and-ce
   "Visor y boton de limpieza (CE)"
   (horizontal-panel
-   :items [(text :id :visor :editable? false)
-           (button :text "CE" :class "btn")]))
+   :maximum-size [250 :by 50]
+   :items [(text :id :visor :editable? false :font "Arial-18")
+           (button :text "CE" :class "btn" :font "Arial-18")]))
 
 (def grid-buttons
   "Panel de botones"
   (grid-panel
    :columns 4
-   :items [(button :text "1" :class "btn" :id "btn1")
-           (button :text "2" :class "btn" :id "btn2")
-           (button :text "3" :class "btn")
-           (button :text "+" :class "btn")
-           (button :text "4" :class "btn")
-           (button :text "5" :class "btn")
-           (button :text "6" :class "btn")
-           (button :text "-" :class "btn")
-           (button :text "7" :class "btn")
-           (button :text "8" :class "btn")
-           (button :text "9" :class "btn")
-           (button :text "/" :class "btn")
-           (button :text "0" :class "btn")
-           (button :text "." :class "btn")
-           (button :text "=" :class "btn")
-           (button :text "*" :class "btn")]))
-
-(defn button-actions
-  "Funcion que aplica un evento a todos los botones de la calculadora"
-  [e] ;; ! NOTE: Cambiar esa e por algo descriptivo
-  (let [visor-widget (select (to-root e) [:#visor])
-        current-value (text visor-widget)
-        button-value (config e :text)]
-    (case button-value
-      "CE" (text! visor-widget "")
-      ;; from-string (de la libreria infix) parsea una cadena de texto como
-      ;; "2+2" ejecuta la operacion y devuelve el valor como un string
-      "=" (text! visor-widget
-                 (str (try ((from-string current-value))
-                           (catch Exception _e "Err")))) ; x / 0 = Err
-
-      (text! visor-widget (str current-value button-value)))))
+   :items [(button :text "1" :font "Arial-BOLD-14" :id "btn1")
+           (button :text "2" :font "Arial-BOLD-14" :id "btn2")
+           (button :text "3" :font "Arial-BOLD-14" :id "btn3")
+           (button :text "+" :font "Arial-BOLD-14" :id "btn-plus")
+           (button :text "4" :font "Arial-BOLD-14" :id "btn4")
+           (button :text "5" :font "Arial-BOLD-14" :id "btn5")
+           (button :text "6" :font "Arial-BOLD-14" :id "btn6")
+           (button :text "-" :font "Arial-BOLD-14" :id "btn-subtract")
+           (button :text "7" :font "Arial-BOLD-14" :id "btn7")
+           (button :text "8" :font "Arial-BOLD-14" :id "btn8")
+           (button :text "9" :font "Arial-BOLD-14" :id "btn9")
+           (button :text "/" :font "Arial-BOLD-14" :id "btn-divide")
+           (button :text "0" :font "Arial-BOLD-14" :id "btn0")
+           (button :text "." :font "Arial-BOLD-14" :id "btn-decimal")
+           (button :text "=" :font "Arial-BOLD-14" :id "btn-equals")
+           (button :text "*" :font "Arial-BOLD-14" :id "btn-multiply")]))
 
 (def calc-panel
-  "Estructura de la calculadora"
+  "Estructura general de la calculadora"
   (vertical-panel
+   :id :calc-panel
    :items [visor-and-ce grid-buttons]))
 
-;; Escucha de eventos
+(def calc-frame
+  "Ventana principal de la calculadora"
+  (frame :title "Calculadora",
+         :content calc-panel ,
+         :size [250 :by 250]
+         :on-close :exit
+         :resizable? false
+         :icon (icon icon_path)))
+
+;; Eventos
+
 ;; Se utiliza la funcion select, a cual se le pasa como paraemtro el elemento
 ;; raiz de la aplicacinon y el o los IDs de los widgets que se van a escuchar
-(listen (select calc-panel [:.btn]) ; Selector como CSS (# - ID, . - CLASS)
-        :action (fn [e] (button-actions e)))
+;; Selector como CSS (# - ID, . - CLASS)
+(listen (select calc-panel [:<javax.swing.JButton>])
+        :action (fn [e] (buttons-actions e)))
 
+;; Keybindings de teclas
+(map-key calc-panel "NUMPAD0" (select calc-panel [:#btn0]))
+(map-key calc-panel "NUMPAD1" (select calc-panel [:#btn1]))
+(map-key calc-panel "NUMPAD2" (select calc-panel [:#btn2]))
+(map-key calc-panel "NUMPAD3" (select calc-panel [:#btn3]))
+(map-key calc-panel "NUMPAD4" (select calc-panel [:#btn4]))
+(map-key calc-panel "NUMPAD5" (select calc-panel [:#btn5]))
+(map-key calc-panel "NUMPAD6" (select calc-panel [:#btn6]))
+(map-key calc-panel "NUMPAD7" (select calc-panel [:#btn7]))
+(map-key calc-panel "NUMPAD8" (select calc-panel [:#btn8]))
+(map-key calc-panel "NUMPAD9" (select calc-panel [:#btn9]))
+(map-key calc-panel "ADD" (select calc-panel [:#btn-plus]))
+(map-key calc-panel "SUBTRACT" (select calc-panel [:#btn-subtract]))
+(map-key calc-panel "MULTIPLY" (select calc-panel [:#btn-multiply]))
+(map-key calc-panel "DIVIDE" (select calc-panel [:#btn-divide]))
+(map-key calc-panel "ENTER" (select calc-panel [:#btn-equals]))
+(map-key calc-panel "DECIMAL" (select calc-panel [:#btn-decimal]))
 
-;; ! TODO: En teoria la siguiente funcion puede hacer que al presionar una tecla
-;; !       se ejecute el evento click de un boton
-(def valid-keys
-  '("1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "+", "-", "*", "/"))
-
-;(map #(map-key calc-panel % (select calc-panel [:#btn1])) valid-keys)
-;; ! NOTE: No anda
-(for [k valid-keys]
-  (map-key calc-panel k (select calc-panel [(keyword (str "#btn" k))])))
-
-;; ! NOTE: El siguiente anda
-;(map-key calc-panel "1" (select calc-panel [:#btn1]))
-
-;(show-options (text))
-;; https://github.com/rm-hull/infix
+;; Funcion principal del programa
 
 (defn -main
   "Funcion principal de la calculadora"
   [& _args]
   (native!)
   (invoke-later
-   (-> (frame :title "Calculadora",
-              :content calc-panel ,
-              :width 250,
-              :height 170,
-              ;:size [250 :by 300]
-              :on-close :exit
-              :resizable? false)
+   (-> calc-frame
        ;pack! ; Contrae todos los widgets a su minimo tamaño
        show!)))

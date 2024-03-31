@@ -28,13 +28,14 @@ You can configure this with the setting:
   "calva.outputDestinations"
 
 
+; Jacking in...
 ; Connecting using "Leiningen" project type.
 ; You can make Calva auto-select this.
 ;   - See https://calva.io/connect-sequences/
 ;
 
-; Starting Jack-in Terminal: pushd c:\Users\Estudiante\Documents\Code\Clojure\calc & cmd.exe /d /c lein update-in :dependencies conj [nrepl,"1.0.0"] -- update-in :plugins conj [cider/cider-nrepl,"0.28.5"] -- update-in [:repl-options,:nrepl-middleware] conj '["cider.nrepl/cider-middleware"]' -- repl :headless & popd
-; Using host:port 127.0.0.1:49211 ...
+; Starting Jack-in Terminal: pushd c:\Users\Benabhi\Documents\Code\Clojure\calc & cmd.exe /d /c lein update-in :dependencies conj [nrepl,"1.0.0"] -- update-in :plugins conj [cider/cider-nrepl,"0.28.5"] -- update-in [:repl-options,:nrepl-middleware] conj '["cider.nrepl/cider-middleware"]' -- repl :headless & popd
+; Using host:port 127.0.0.1:61848 ...
 ; Hooking up nREPL sessions ...
 ; Connected session: clj
 ; Evaluating code from settings: 'calva.autoEvaluateCode.onConnect.clj'
@@ -45,33 +46,169 @@ about why stdout printed to this file is prepended with `;` to be line comments.
 clj꞉calc.core꞉> 
 ; Jack-in done.
 clj꞉calc.core꞉> 
-13
-clj꞉calc.core꞉> 
-5
-clj꞉calc.core꞉> 
-5
-clj꞉calc.core꞉> 
-; Execution error (ClassCastException) at calc.core/eval14095 (form-init5006608691150850646.clj:67).
-; java.lang.String cannot be cast to clojure.lang.IFn
-clj꞉calc.core꞉> 
-"2+3"
-clj꞉calc.core꞉> 
-; Execution error (NumberFormatException) at calc.core/eval14097 (form-init5006608691150850646.clj:67).
-; Invalid number: 2+3
-clj꞉calc.core꞉> 
-; Execution error (NumberFormatException) at calc.core/eval14099 (form-init5006608691150850646.clj:67).
-; Invalid number: 2+3
-clj꞉calc.core꞉> 
-; Execution error (NumberFormatException) at calc.core/eval14101 (form-init5006608691150850646.clj:67).
-; Invalid number: 2+3
-clj꞉calc.core꞉> 
 #function[clojure.lang.AFunction/1]
 clj꞉calc.core꞉> 
-#function[clojure.lang.AFunction/1]
+4
 clj꞉calc.core꞉> 
-"clojure.lang.AFunction$1@79846cf7"
+4.5
 clj꞉calc.core꞉> 
-"5"
+; 4.5
+nil
 clj꞉calc.core꞉> 
-:btn1
+#'calc.core/ends-with-dot-zero?
+clj꞉calc.core꞉> 
+1.0
+clj꞉calc.core꞉> 
+true
+clj꞉calc.core꞉> 
+false
+clj꞉calc.core꞉> 
+true
+clj꞉calc.core꞉> 
+#'calc.core/ends-with-dot-zero?
+clj꞉calc.core꞉> 
+true
+clj꞉calc.core꞉> 
+4.5
+clj꞉calc.core꞉> 
+4
+clj꞉calc.core꞉> 
+"10.0"
+clj꞉calc.core꞉> 
+; Syntax error compiling at (c:\Users\Benabhi\Documents\Code\Clojure\calc\src\calc\core.clj:39:1).
+; Unable to resolve symbol: parse-result in this context
+clj꞉calc.core꞉> 
+2
+clj꞉calc.core꞉> 
+true
+clj꞉calc.core꞉> 
+10
+clj꞉calc.core꞉> 
+10.0
+clj꞉calc.core꞉> 
+; Syntax error compiling at (c:\Users\Benabhi\Documents\Code\Clojure\calc\src\calc\core.clj:39:1).
+; Unable to resolve symbol: parse-result in this context
+clj꞉calc.core꞉> 
+#'calc.core/parse-result
+clj꞉calc.core꞉> 
+10
+clj꞉calc.core꞉> 
+10.1
+clj꞉calc.core꞉> 
+; Execution error (NullPointerException) at calc.core/parse-result (form-init8071557486350702583.clj:33).
+; null
+clj꞉calc.core꞉> 
+#'calc.core/parse-result
+clj꞉calc.core꞉> 
+; Execution error (NullPointerException) at calc.core/parse-result (form-init8071557486350702583.clj:33).
+; null
+clj꞉calc.core꞉> 
+; Execution error (NullPointerException) at calc.core/parse-result (form-init8071557486350702583.clj:33).
+; null
+clj꞉calc.core꞉> 
+8
+clj꞉calc.core꞉> 
+#'calc.core/parse-result
+clj꞉calc.core꞉> 
+8
+clj꞉calc.core꞉> 
+; Execution error (NullPointerException) at calc.core/parse-result (form-init8071557486350702583.clj:33).
+; null
+clj꞉calc.core꞉> 
+; Execution error (NullPointerException) at calc.core/parse-result (form-init8071557486350702583.clj:33).
+; null
+clj꞉calc.core꞉> 
+; Execution error (NullPointerException) at calc.core/eval14277 (form-init8071557486350702583.clj:41).
+; null
+clj꞉calc.core꞉> 
+nil
+clj꞉calc.core꞉> 
+1
+clj꞉calc.core꞉> 
+nil
+clj꞉calc.core꞉> 
+1
+clj꞉calc.core꞉> 
+1
+clj꞉calc.core꞉> 
+1
+clj꞉calc.core꞉> 
+nil
+clj꞉calc.core꞉> 
+#'calc.core/parse-result
+clj꞉calc.core꞉> 
+; Execution error (NullPointerException) at calc.core/parse-result (form-init8071557486350702583.clj:35).
+; null
+clj꞉calc.core꞉> 
+#'calc.core/parse-result
+clj꞉calc.core꞉> 
+; Execution error (NullPointerException) at calc.core/parse-result (form-init8071557486350702583.clj:35).
+; null
+clj꞉calc.core꞉> 
+8.1
+clj꞉calc.core꞉> 
+8
+clj꞉calc.core꞉> 
+; Execution error (NullPointerException) at calc.core/parse-result (form-init8071557486350702583.clj:35).
+; null
+clj꞉calc.core꞉> 
+#'calc.core/parse-result
+clj꞉calc.core꞉> 
+; Execution error (NullPointerException) at calc.core/parse-result (form-init8071557486350702583.clj:35).
+; null
+clj꞉calc.core꞉> 
+; Execution error (NullPointerException) at calc.core/parse-result (form-init8071557486350702583.clj:35).
+; null
+clj꞉calc.core꞉> 
+; Execution error (NullPointerException) at calc.core/parse-result (form-init8071557486350702583.clj:35).
+; null
+clj꞉calc.core꞉> 
+; Execution error (NullPointerException) at calc.core/parse-result (form-init8071557486350702583.clj:35).
+; null
+clj꞉calc.core꞉> 
+; Execution error (NullPointerException) at calc.core/parse-result (form-init8071557486350702583.clj:35).
+; null
+clj꞉calc.core꞉> 
+; Execution error (NullPointerException) at calc.core/parse-result (form-init8071557486350702583.clj:35).
+; null
+clj꞉calc.core꞉> 
+false
+clj꞉calc.core꞉> 
+true
+clj꞉calc.core꞉> 
+8
+clj꞉calc.core꞉> 
+#'calc.core/parse-result
+clj꞉calc.core꞉> 
+#'calc.core/parse-result
+clj꞉calc.core꞉> 
+; Execution error (NullPointerException) at calc.core/eval14326 (form-init8071557486350702583.clj:41).
+; null
+clj꞉calc.core꞉> 
+false
+clj꞉calc.core꞉> 
+; Execution error (NullPointerException) at calc.core/eval14330 (form-init8071557486350702583.clj:41).
+; null
+clj꞉calc.core꞉> 
+true
+clj꞉calc.core꞉> 
+#'calc.core/parse-result
+clj꞉calc.core꞉> 
+8
+clj꞉calc.core꞉> 
+8.1
+clj꞉calc.core꞉> 
+8
+clj꞉calc.core꞉> 
+; Execution error (ClassCastException) at calc.core/parse-result (form-init8071557486350702583.clj:37).
+; java.lang.String cannot be cast to java.lang.Character
+clj꞉calc.core꞉> 
+#'calc.core/parse-result
+clj꞉calc.core꞉> 
+; Execution error (ClassCastException) at calc.core/parse-result (form-init8071557486350702583.clj:37).
+; java.lang.String cannot be cast to java.lang.Character
+clj꞉calc.core꞉> 
+10
+clj꞉calc.core꞉> 
+1
 clj꞉calc.core꞉> 
